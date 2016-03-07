@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Profile from './github/Profile.jsx'
+import Profile from './github/Profile.jsx';
+import Search from './github/Search.jsx';
 class App extends Component{
     constructor(props){
         super(props);
@@ -28,6 +29,12 @@ class App extends Component{
     componentWillMount(){
         this.getUserData();
     }
+    handleSubmit(username){
+        this.setState({username: username},function(){
+            this.getUserData();
+        });
+
+    }
     render(){
         return(
             <div className="panel panel-default">
@@ -35,6 +42,7 @@ class App extends Component{
                     <h3 className="panel-title">{this.state.username}</h3>
                 </div>
                 <div className="panel-body">
+                    <Search handleForm={this.handleSubmit.bind(this )}/>
                     <Profile {...this.state}/>
                 </div>
             </div>
