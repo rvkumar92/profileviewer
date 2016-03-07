@@ -39,7 +39,7 @@ class App extends Component{
         return(
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title">{this.state.username}</h3>
+                    <h3 className="panel-title">{this.state.userData.name}</h3>
                 </div>
                 <div className="panel-body">
                     <Search handleForm={this.handleSubmit.bind(this )}/>
