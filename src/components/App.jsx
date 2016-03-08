@@ -26,8 +26,24 @@ class App extends Component{
             }
         });
     }
+    getUserRepos(){
+        $.ajax({
+            url: 'https://api.github.com/users/'+this.state.username+'/repos?per_page='+this.state.perPage+'&client_id='+this.props.clientId+'&client_secret='+this.props.clientSecret+'&sort=created',
+            dataType: 'json',
+            cache: false,
+            success: function(data){
+                console.log(data);
+                this.setState({userRepos: data});
+            }.bind(this),
+            error: function(xhr, status, error){
+                this.setState({username: null});
+                alert(error).bind(this);
+            }
+        });
+    }
     componentWillMount(){
         this.getUserData();
+        this.getUserRepos();
     }
     handleSubmit(username){
         this.setState({username: username},function(){
@@ -37,14 +53,9 @@ class App extends Component{
     }
     render(){
         return(
-            <div className="panel panel-default">
-                <div className="panel-heading">
-                    <h3 className="panel-title">{this.state.userData.name}</h3>
-                </div>
-                <div className="panel-body">
-                    <Search handleForm={this.handleSubmit.bind(this )}/>
-                    <Profile {...this.state}/>
-                </div>
+            <div>
+                <Search handleForm={this.handleSubmit.bind(this)}/>
+                <Profile {...this.state}/>
             </div>
         );
     }
