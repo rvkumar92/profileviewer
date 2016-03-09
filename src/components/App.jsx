@@ -8,7 +8,7 @@ class App extends Component{
             username: 'rvkumar92',
             userData: [],
             userRepos: [],
-            perPage: 5
+            perPage: 10
         }
     }
     getUserData(){
@@ -28,7 +28,8 @@ class App extends Component{
     }
     getUserRepos(){
         $.ajax({
-            url: 'https://api.github.com/users/'+this.state.username+'/repos?per_page='+this.state.perPage+'&client_id='+this.props.clientId+'&client_secret='+this.props.clientSecret+'&sort=created',
+            //url: 'https://api.github.com/users/'+this.state.username+'/repos?per_page='+this.state.perPage+'&client_id='+this.props.clientId+'&client_secret='+this.props.clientSecret+'&sort=created',
+            url: 'https://api.github.com/users/'+this.state.username+'/repos?client_id='+this.props.clientId+'&client_secret='+this.props.clientSecret+'&sort=created',
             dataType: 'json',
             cache: false,
             success: function(data){
@@ -48,6 +49,7 @@ class App extends Component{
     handleSubmit(username){
         this.setState({username: username},function(){
             this.getUserData();
+            this.getUserRepos();
         });
 
     }
